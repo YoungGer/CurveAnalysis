@@ -10,7 +10,7 @@ class VCurveStrategy:
     def __del__(self):
         self.quote_ctx.close()
 
-    def run_for_daily_k(self):
+    def run_for_daily_k(self, flag_up=True):
         """
         1. get last 3 days k line data
         2. judge v curve
@@ -22,7 +22,7 @@ class VCurveStrategy:
             df_data = futu_api.get_last_k_curve(self.quote_ctx, code, 3)
             if df_data is not None:
                 # strategy 
-                flag_v_curve = strategy.flag_v_curve_for_df(df_data)
+                flag_v_curve = strategy.flag_v_curve_for_df(df_data, flag_up)
 
                 # parse data
                 last3_vwap_l = df_data["vwap"].to_list()[-3:]

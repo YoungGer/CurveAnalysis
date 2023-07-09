@@ -9,11 +9,15 @@ def flag_v_curve(last3_vwap_l, last3_close_l, direc_up=True):
     if len(last3_vwap_l) != 3 or len(last3_close_l) != 3:
         return False
 
+    curr_price = last3_close_l[-1]
+
     if direc_up:
-        flag_vmap_v = last3_vwap_l[0] > last3_vwap_l[1] and last3_vwap_l[1] < last3_vwap_l[2]
+        flag_vmap_v = last3_vwap_l[0] > last3_vwap_l[1] and \
+            ((last3_vwap_l[1] < last3_vwap_l[2]) or (last3_vwap_l[2] < curr_price))
         flag_close_v = last3_close_l[0] > last3_close_l[1] and last3_close_l[1] < last3_close_l[2]
     else:
-        flag_vmap_v = last3_vwap_l[0] < last3_vwap_l[1] and last3_vwap_l[1] > last3_vwap_l[2]
+        flag_vmap_v = last3_vwap_l[0] < last3_vwap_l[1] and \
+            ((last3_vwap_l[1] > last3_vwap_l[2]) or (last3_vwap_l[2] > curr_price))
         flag_close_v = last3_close_l[0] < last3_close_l[1] and last3_close_l[1] > last3_close_l[2]
 
     return flag_vmap_v and flag_close_v
